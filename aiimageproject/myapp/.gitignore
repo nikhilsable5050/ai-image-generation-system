@@ -1,0 +1,30 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Model cache
+model_cache/
+
+# Node modules
+node_modules/
+
+# Generated images
+generated_cat_image.png
+generated_cat_image1.png
+
+# CSV files
+*.csv
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log

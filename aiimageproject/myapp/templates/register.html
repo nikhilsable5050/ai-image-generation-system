@@ -1,0 +1,160 @@
+{% load static %}
+{% block content %}
+  <style>
+    /* General styles for the registration form */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .register-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-image: url("{% static 'images/background.jpg' %}");
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .register-box {
+      background: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast */
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for contrast */
+      max-width: 450px;
+      width: 100%;
+      border: 1px solid #e0e0e0;
+    }
+
+    .register-box h2 {
+      text-align: center;
+      color: orange;
+      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 28px;
+    }
+
+    /* Aligning form fields in a well-structured way */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: orange;
+    }
+
+    .form-control {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      box-sizing: border-box;
+      background-color: #f8f9fa;
+      transition: border-color 0.3s ease;
+      width: 100%;
+    }
+
+    .form-control:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: orangered;
+    }
+
+    .form-text {
+      font-size: 14px;
+      color: #6c757d;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .form-text a {
+      color: orangered;
+      text-decoration: none;
+    }
+
+    .form-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .register-box {
+        width: 90%;
+        padding: 20px;
+      }
+
+      .form-group {
+        flex-direction: column;
+      }
+
+      .form-group label {
+        width: 100%; /* Full width on mobile */
+        margin-bottom: 10px;
+      }
+
+      .form-control {
+        width: 100%; /* Full width on mobile */
+      }
+    }
+  </style>
+
+  <div class="register-container">
+    <div class="register-box">
+      <h2>Register</h2>
+      <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label for="username">Username</label>
+          {{ form.username }}
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          {{ form.email }}
+        </div>
+
+        <div class="form-group">
+          <label for="password1">Password</label>
+          {{ form.password1 }}
+        </div>
+
+        <div class="form-group">
+          <label for="password2">Confirm Password</label>
+          {{ form.password2 }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+
+      <div class="form-text">
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

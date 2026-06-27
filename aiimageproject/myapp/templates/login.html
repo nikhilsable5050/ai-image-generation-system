@@ -1,0 +1,152 @@
+{% load static %}
+
+{% block content %}
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-image: url("{% static 'images/background.jpg' %}");
+      background-size: cover;
+      position: relative;
+    }
+
+    .login-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .login-box {
+      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      max-width: 450px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(10px); /* Optional: adds a blurred background effect */
+      transition: transform 0.3s ease;
+    }
+
+    .login-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .login-box h2 {
+      text-align: center;
+      color: #fff;
+      font-size: 30px;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center-align input fields and labels */
+      justify-content: center;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 8px; /* Space between label and input */
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 16px; /* Increased padding for a larger input field */
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      margin-top: 8px;
+      font-size: 16px;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transition: all 0.3s ease;
+      height: 50px; /* Increased height to make the typing area larger */
+    }
+
+    .form-control:focus {
+      border-color: orangered;
+      box-shadow: 0 0 8px orangered;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 18px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: orangered;
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .footer-text a {
+      color: orangered;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+      .login-box {
+        padding: 30px;
+        width: 90%;
+      }
+    }
+  </style>
+
+  <div class="login-container">
+    <div class="login-overlay"></div>
+    <div class="login-box">
+      <h2>Login</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="username">Username</label>
+          {{ form.username }}
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+      <div class="footer-text">
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

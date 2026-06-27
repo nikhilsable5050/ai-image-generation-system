@@ -1,0 +1,105 @@
+{% block content %}
+<div class="container mt-5" style="min-height: 100vh; display: flex; justify-content: center; align-items: center;
+ background-image: url('https://www.weetechsolution.com/wp-content/uploads/2023/01/imgpsh_fullsize_anim-4.jpg'); 
+ background-size: cover;">
+  <div class="form-container" style="max-width: 800px; background-color: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); width: 100%;">
+    <center>
+      <h2 class="text-center mb-4" style="font-weight: bold; color: orangered; background-color: #e3f2fd; padding: 15px; border-radius: 8px;">Generate AI Images</h2>
+    </center>
+    {% csrf_token %}
+
+    <form method="POST" id="imageForm" style="margin-bottom: 20px;">
+      {% csrf_token %}
+      <div class="form-group mb-4">
+        <label for="object_name" style="font-size: 1.1rem; font-weight: 600; color: #fff;">1. Enter Object Name:</label>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <input type="text" id="object_name" name="object_name" class="form-control" required style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ced4da; background-color: #e9ecef;">
+          <button type="button" id="voice_object_name" class="btn btn-info" style="padding: 8px 12px; font-size: 1.2rem; background-color: #17a2b8; color: #fff; border: none; border-radius: 5px;">🎤</button>
+        </div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="object_description" style="font-size: 1.1rem; font-weight: 600; color: #fff;">2. Enter Object Description:</label>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <textarea id="object_description" name="object_description" rows="4" class="form-control" required style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ced4da; background-color: #e9ecef;"></textarea>
+          <button type="button" id="voice_object_description" class="btn btn-info" style="padding: 8px 12px; font-size: 1.2rem; background-color: #17a2b8; color: #fff; border: none; border-radius: 5px;">🎤</button>
+        </div>
+      </div>
+      <br>
+      <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary" style="padding: 12px 25px; font-size: 1.1rem; background-color: orangered; border-color: orangereds; border-radius: 5px; font-weight: 600;">Generate AI Images</button>
+      </div>
+    </form>
+
+    {% if generated_images %}
+    <center><h3 class="mt-4 text-center justify-content-center" style="font-weight: bold; color: #333; background-color: #ffeb3b; padding: 10px; border-radius: 8px;">Generated Images</h3>
+    <div class="row justify-content-center" style="margin-top: 20px;">
+      {% for image in generated_images %}
+      <div class="col-md-4 mb-4">
+        <div class="card" style="border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); background-color: #e0f7fa;">
+          <img src="{{ image.generated_image_url }}" class="card-img-top" alt="Generated Image" style="max-height: 200px; object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+          <div class="card-body" style="text-align: center; background-color: #ffffff; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <h5 class="card-title" style="font-weight: 600; color: #00796b;">{{ image.object_name }}</h5>
+            <a href="{% url 'download_image' image.image_name %}" class="btn btn-success w-100 mb-2" style="background-color: #4caf50; border: none; padding: 10px; border-radius: 5px;">
+              Download
+          </a>
+            <a href="https://wa.me/?text={{ image.generated_image_url }}" target="_blank" class="btn btn-success w-100" style="background-color: #25d366; border: none; padding: 10px; border-radius: 5px;">Share on WhatsApp</a>
+
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ image.generated_image_url }}" target="_blank" class="btn btn-primary w-100 mt-2" style="background-color: #0077b5; border: none; padding: 10px; border-radius: 5px;">Share on LinkedIn</a>
+
+            <a href="mailto:?subject=Check%20out%20this%20image&body={{ image.generated_image_url }}" target="_blank" class="btn btn-danger w-100 mt-2" style="background-color: #d14836; border: none; padding: 10px; border-radius: 5px;">Share via Gmail</a>
+
+          </div><br><br><br>
+        </div>
+      </div>
+      {% endfor %}
+    </div></center>
+    {% endif %}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Speech Recognition (Voice Input Support)
+  const voiceInputSupported = 'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
+
+  if (voiceInputSupported) {
+    const objectNameInput = document.getElementById('object_name');
+    const objectDescriptionInput = document.getElementById('object_description');
+
+    const objectNameVoiceButton = document.getElementById('voice_object_name');
+    const objectDescriptionVoiceButton = document.getElementById('voice_object_description');
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+
+      if (recognition.activeInput === 'object_name') {
+        objectNameInput.value = transcript;
+      } else if (recognition.activeInput === 'object_description') {
+        objectDescriptionInput.value = transcript;
+      }
+    };
+
+    objectNameVoiceButton.addEventListener('click', () => {
+      recognition.activeInput = 'object_name';
+      recognition.start();
+    });
+
+    objectDescriptionVoiceButton.addEventListener('click', () => {
+      recognition.activeInput = 'object_description';
+      recognition.start();
+    });
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+    };
+  } else {
+    console.log('Voice input is not supported in this browser.');
+  }
+</script>
+
+{% endblock %}

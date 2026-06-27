@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI IMAGE GENERATION</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+            height: 100vh;
+        }
+        /* Hero Section Styling */
+        .hero-section {
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            color: orange;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast */
+        }
+        .hero-text {
+            position: relative;
+            text-align: left;
+            padding: 20px;
+            z-index: 1;
+            max-width: 500px;
+            margin-right: 15%;
+        }
+        .hero-text h1 {
+            font-size: 60px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .hero-text p {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        .hero-text .btn {
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .hero-text .btn:hover {
+            background-color: orangered;
+            transform: scale(1.1);
+        }
+        /* Features Section Styling */
+        .feature-box {
+            margin: 50px auto;
+            text-align: center;
+        }
+        .feature-box .card {
+            margin: 20px; /* Add spacing between cards */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .feature-box .card:hover {
+            transform: translateY(-10px); /* Slight lift on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .feature-box .card-img-top {
+            height: 200px; /* Set a consistent height for all images */
+            object-fit: cover; /* Crop images to fit the card without distortion */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-text">
+            <h1>Create Stunning Images with AI</h1>
+            <p>Unlock the power of AI to generate beautiful, custom images at the click of a button.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
+    </section>
+</br></br>
+<center><h2>AI generated Sample Images</h2></center>
+    <!-- Features Section -->
+    <section class="container feature-box">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://png.pngtree.com/background/20230428/original/pngtree-amazing-tree-ai-picture-image_2498912.jpg" alt="Feature 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Tree</h5>
+                        <p class="card-text">One Big Tree</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://img.freepik.com/premium-photo/best-cars-generated-with-ai_933329-154.jpg" alt="Feature 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Car</h5>
+                        <p class="card-text">Single Car</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://cdn.pixabay.com/photo/2023/03/28/13/28/ai-generated-7883147_1280.jpg" alt="Feature 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Cat</h5>
+                        <p class="card-text">Cat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
